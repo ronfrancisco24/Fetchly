@@ -11,40 +11,79 @@ header = {
 }
 
 job_listings_url = "https://weworkremotely.com/categories/remote-full-stack-programming-jobs#job-listings"
-technology_url = "https://news.ycombinator.com/"
+technology_articles_url = "https://news.ycombinator.com/"
 movies_url = "https://api.themoviedb.org/3/trending/movie/week"
 
-job_response = requests.get(job_listings_url, headers=header)
-job_text = job_response.text
+# Job Scraper
 
-job_soup = BeautifulSoup(job_text, 'html.parser')
-job_lists = job_soup.find_all(name='li', class_="new-listing-container")
+# job_response = requests.get(job_listings_url, headers=header)
+# job_text = job_response.text
 
-jobs = []
+# job_soup = BeautifulSoup(job_text, 'html.parser')
+# job_lists = job_soup.find_all(name='li', class_="new-listing-container")
 
-# Scrape Job Listings.
+# jobs = []
 
-for job in job_lists:
-    # Exclude ad listings.
-    if 'feature--ad' in job.get('class', []):
-        continue
+# # Scrape Job Listings.
+
+# for job in job_lists:
+#     # Exclude ad listings.
+#     if 'feature--ad' in job.get('class', []):
+#         continue
     
-    title = job.find(name='h3', class_='new-listing__header__title')
-    company = job.find(name='p', class_='new-listing__company-name')
-    location = job.find(name='p', class_='new-listing__company-headquarters')
-    date_posted = job.find(name='p', class_='new-listing__header__icons__date')
-    link = job.find(name='a')
+#     title = job.find(name='h3', class_='new-listing__header__title')
+#     company = job.find(name='p', class_='new-listing__company-name')
+#     location = job.find(name='p', class_='new-listing__company-headquarters')
+#     date_posted = job.find(name='p', class_='new-listing__header__icons__date')
+#     link = job.find_all(name='a')
+    
+#     # If there are more than one anchor tags select the 2nd one. (This is because the main link for the application is the 2nd link.)
+#     if len(link) > 1:
+#         web_link = link[1].get('href')
         
-    jobs.append(
-        {
-            'title': title.getText(),
-            'company': company.getText(),
-            'location': location.getText(),
-            'date_posted': date_posted.getText(),
-            'link': 'https://weworkremotely.com/categories/remote-full-stack-programming-jobs#job-listings'
-        }
-    )    
+#     jobs.append(
+#         {
+#             'title': title.getText(),
+#             'company': company.getText(),
+#             'location': location.getText(),
+#             'date_posted': date_posted.getText(),
+#             'link': f'weworkremotely.com{web_link}'
+#         }
+#     )    
+    
+# print(jobs[1])
+    
+# Technology Scraper
+
+# article_response = requests.get(technology_articles_url, headers=header)
+# article_text = article_response.text
+
+# article_soup = BeautifulSoup(article_text, 'html.parser')
+# articles = article_soup.find_all(name='span', class_='titleline')
+# article_score = article_soup.find_all(name='span', class_='score')
+
+# article_data = []
+
+# for article, score in zip(articles, article_score):
+#     anchor = article.find(name='a')
+#     if anchor:
+#         title = anchor.getText()
+#         link = anchor.get('href')
+#         score_text = score.getText()
+        
+#     article_data.append({
+#         'title': title,
+#         'link': link,
+#         'score': score_text
+#     })
+    
+# print(article_data[0])
+    
+    
     
     
 
+
     
+
+
