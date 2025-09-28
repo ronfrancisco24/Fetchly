@@ -78,7 +78,10 @@ movies_url = "https://api.themoviedb.org/3/trending/movie/week"
 #     })
     
 # print(article_data[0])
-    
+
+# TMDB API
+
+
     
     
     
