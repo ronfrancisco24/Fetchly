@@ -3,7 +3,6 @@ import streamlit as st
 def render_home():
     st.sidebar.markdown("# Fetchly")
     st.sidebar.markdown('Your all-in-one hub for **Tech News, Trending Movies, and Remote Jobs** — powered by Python, Streamlit, and BeautifulSoup.')
-
     st.markdown("# Welcome to Fetchly!")
 
     st.write("""Fetchly is a modular, all-in-one web application that brings together the latest tech articles, trending movies, and remote job listings into a single dashboard. Built with Python, Streamlit, Plotly, and BeautifulSoup, Fetchly helps users explore data from multiple sources in a clean, interactive interface.
@@ -22,7 +21,7 @@ def render_home():
     def mark_column(column, message, color):
         with column:
             st.markdown(f"""
-            <div style="border-left: solid {color}; color:#000000; background-color: #fff; padding-left: 1em; padding: 1em; border-radius: 0.5em; margin-bottom: 4px; height:30rem; font-size: 1rem;">
+            <div style="border-left: solid 6px {color}; color:#000000; background-color: #fff; padding-left: 1em; padding: 1em; border-radius: 0.5em; height:30rem; font-size: 1rem; margin-bottom: 1.5rem;">
             {message}
             </div>
         """, unsafe_allow_html=True)

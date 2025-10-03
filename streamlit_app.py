@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from home_page import render_home
-from jobs_page import render_jobs
+from jobs_page import render_jobs, display_jobs
 from movies_page import render_movies
 from articles_page import render_articles
 import base64 
@@ -13,15 +13,14 @@ def get_img_as_base64(file):
 
 img = get_img_as_base64("images/background-image.png")
         
-page_options = ["Home", "Jobs", "Articles", "Movies"]
+page_options = ["Home", "Jobs", "Tech Articles", "Movies"]
     
 selected_page = st.sidebar.selectbox(
     "Fetch Options",
     page_options
 )
 
-st.sidebar.button("Fetch Data!", use_container_width=True, key="fetch_btn")
-st.sidebar.button("Download", use_container_width=True, key="download_btn")
+st.set_page_config(layout="wide")
 
 st.markdown(f"""
     <style>
@@ -52,8 +51,8 @@ def handle_page(page):
         case "Home":
             render_home()
         case "Jobs":
-            render_jobs()
-        case "Articles":
+            display_jobs()
+        case "Tech Articles":
             render_articles()
         case "Movies":
             render_movies()
