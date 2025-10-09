@@ -71,6 +71,14 @@ JOBS_CSS = """
         overflow: auto;
     }
     
+    [class*="secondary_container_"] {
+        background-color: rgba(250, 250, 250);
+        border-radius: 0.5rem;
+        border: solid 1px #ccc;
+        padding: 1em;
+        color: #1e3a8a;
+    }
+    
     [class*="st-key-job_listing_"] {
         background-color: rgb(250, 250, 250);
         padding: 1em;
@@ -81,7 +89,7 @@ JOBS_CSS = """
         margin-bottom: 1rem;
     }
     
-    [class*="secondary_container_"] {
+    [class*="accented_container_"] {
         background-color: rgba(40, 199, 98, 0.2);
         border-radius: 0.5rem;
         padding: 1em;
@@ -95,6 +103,20 @@ JOBS_CSS = """
         text-align:center;
         font-weight: bold;
     }
+    
+    .stats-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #3b82f6;
+        text-align: center;
+    }
+    
+    .stats-label {
+        font-size: 0.9rem;
+        color: #666;
+        text-align: center;
+        padding-bottom: 5px;
+    }
 """
 
 MOVIES_CSS = """
@@ -107,6 +129,14 @@ MOVIES_CSS = """
         overflow: auto;
     }
     
+    [class*="secondary_container_"] {
+        background-color: rgba(250, 250, 250);
+        border-radius: 0.5rem;
+        border: solid 1px #ccc;
+        padding: 1em;
+        color: #1e3a8a;
+    }
+    
     [class*="st-key-movie_listing_"] {
         background-color: rgb(250, 250, 250);
         padding: 1em;
@@ -117,7 +147,7 @@ MOVIES_CSS = """
         margin-bottom: 1rem;
     }
     
-    [class*="secondary_container_"] {
+    [class*="accented_container_"] {
         background-color: rgba(109, 33, 172, 0.1);
         border-radius: 0.5rem;
         padding: 1em;
@@ -132,4 +162,17 @@ MOVIES_CSS = """
         font-weight: bold;
     }   
 
+    .stats-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #3b82f6;
+        text-align: center;
+    }
+    
+    .stats-label {
+        font-size: 0.9rem;
+        color: #666;
+        text-align: center;
+        padding-bottom: 5px;
+    }
 """

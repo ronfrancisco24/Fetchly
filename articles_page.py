@@ -55,7 +55,6 @@ def display_articles():
     st.html(f"<style>{ARTICLES_CSS}</style>")
     
     top_container = st.container()
-    
     column1, column2, column3 = top_container.columns(3)
    
     mark_column(column=column1, css_key='stats_container_1', number='4', description='Articles Found')
@@ -87,10 +86,15 @@ def display_article_results(main_container):
             col1.write(f'**Type:** {job['type']}')
             col2.write(f'**Posted:** {job['posted']}')
             col2.button('**↗ More Info Here!**',  key=f'more_info_{i}')
+            
+def stats_labels(number, label):
+    st.markdown(f'<div class="stats-number">{number}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="stats-label">{label}</div>', unsafe_allow_html=True)
     
 def display_analytics(main_container):
     col1, col2 = main_container.columns(2)
     with col1.container(key='secondary_container_type', height='stretch'):
+        # turn into articles by source
         st.markdown('###### Jobs By Type')
         st.markdown('Full - Time — 85%')
         st.progress(0.25)
@@ -99,9 +103,7 @@ def display_analytics(main_container):
     
     with col2.container(key='secondary_container_stats', height='stretch'):
         st.write('###### Summary Stats')
-        st.markdown('<div class="stats-number">4</div>', unsafe_allow_html=True)
-        st.markdown('<div class="stats-label">Total Jobs</div>', unsafe_allow_html=True)
-        st.markdown('<div class="stats-number"">4</div>', unsafe_allow_html=True)
-        st.markdown('<div class="stats-label">Total Unique Companies</div>', unsafe_allow_html=True)
+        stats_labels(4, 'Total Jobs')
+        stats_labels(5, 'Total Unique Companies')
     
     
