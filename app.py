@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 from home_page import render_home
 from jobs_page import render_jobs, display_jobs
-from movies_page import render_movies
-from articles_page import render_articles
+from movies_page import render_movies, display_movies
+from articles_page import render_articles, display_articles
 import base64 
 
 def get_img_as_base64(file):
@@ -53,9 +53,9 @@ def handle_page(page):
         case "Jobs":
             display_jobs()
         case "Tech Articles":
-            render_articles()
+            display_articles()
         case "Movies":
-            render_movies()
+            display_movies()
         case _:
             render_home()
             
