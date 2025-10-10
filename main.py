@@ -11,6 +11,9 @@ def main():
 if __name__ == "__main__":
     main()
 
+#TODO: have a global css instead. 
+
+
 
     
 

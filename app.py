@@ -51,11 +51,11 @@ def handle_page(page):
         case "Home":
             render_home()
         case "Jobs":
-            display_jobs()
+            render_jobs()
         case "Tech Articles":
-            display_articles()
+            render_articles()
         case "Movies":
-            display_movies()
+            render_movies()
         case _:
             render_home()
             

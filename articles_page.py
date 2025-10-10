@@ -1,15 +1,15 @@
 import streamlit as st
 from styles import ARTICLES_CSS
     
-# sample jobs for testing.
-jobs = [
-    {"title": "Python Developer", "company": "Tech Corp", "location": 'San Francisco, CA', "posted": '1-24-25', "type": "Full Time"},
-    {"title": "Data Scientist", "company": "AI Company", "location": 'Chicago, IL', "posted": '1-24-25', "type": "Full Time"},
-    {"title": "Web Developer", "company": "StartupXYZ", "location": 'Los Angeles, CA', "posted": '1-26-25', "type": "Contract"},
-    {"title": "Web Developer", "company": "StartupXYZ", "location": 'Los Angeles, CA', "posted": '1-26-25', "type": "Contract"},
-    {"title": "Web Developer", "company": "StartupXYZ", "location": 'Los Angeles, CA', "posted": '1-26-25', "type": "Contract"},
-    {"title": "Web Developer", "company": "StartupXYZ", "location": 'Los Angeles, CA', "posted": '1-26-25', "type": "Contract"},
-    {"title": "Web Developer", "company": "StartupXYZ", "location": 'Los Angeles, CA', "posted": '1-26-25', "type": "Contract"},
+# sample articles for testing.
+articles = [
+    {"title": "AI Breakthrough in Machine Learning", "source": "TechCrunch", "category": "AI", "published": "1-24-25", "read_time": "5 min"},
+    {"title": "New Framework for Web Development", "source": "Wired", "category": "Web Dev", "published": "1-24-25", "read_time": "3 min"},
+    {"title": "Quantum Computing Advances", "source": "TechCrunch", "category": "Hardware", "published": "1-26-25", "read_time": "7 min"},
+    {"title": "Cybersecurity Trends 2025", "source": "Ars Technica", "category": "Security", "published": "1-26-25", "read_time": "6 min"},
+    {"title": "Cloud Infrastructure Updates", "source": "Wired", "category": "Cloud", "published": "1-26-25", "read_time": "4 min"},
+    {"title": "Mobile App Development Tools", "source": "TechCrunch", "category": "Mobile", "published": "1-26-25", "read_time": "5 min"},
+    {"title": "Data Science Best Practices", "source": "MIT Tech Review", "category": "Data", "published": "1-26-25", "read_time": "8 min"},
 ]
     
 def render_articles():
@@ -17,10 +17,27 @@ def render_articles():
     st.markdown("# Tech News Page 🔬")
     st.sidebar.markdown("# Articles Page 🔬")
     st.sidebar.markdown('Your all-in-one hub for **Tech News, Trending Movies, and Remote Jobs** — powered by Python, Streamlit, and BeautifulSoup.')
-    fetch = st.sidebar.button("Fetch Data!", use_container_width=True, key="fetch_btn")
-    if fetch:
+    
+    # Initialize session state
+    if 'articles_fetched' not in st.session_state:
+        st.session_state.articles_fetched = False
+  
+    
+    
+    if st.session_state.articles_fetched:
+        clear = st.sidebar.button('Clear Results', use_container_width=True, key="clear_btn")
+        if clear:
+            st.session_state.articles_fetched = False
+            st.rerun() 
         display_articles()
-        
+    else:
+        initial_content()
+        fetch = st.sidebar.button("Fetch Data!", use_container_width=True, key="fetch_btn")
+        if fetch:
+            st.session_state.articles_fetched = True
+      
+    
+def initial_content():
     main_container = st.container(key='article_listing_main')
 
     with main_container:
@@ -48,11 +65,8 @@ def mark_column(column, css_key, number, description):
         st.write(description)
 
 def display_articles():
-    st.sidebar.markdown("# Articles Page 🔬")
-    st.sidebar.markdown('Your all-in-one hub for **Tech News, Trending Movies, and Remote Jobs** — powered by Python, Streamlit, and BeautifulSoup.')
-    st.sidebar.button('Clear', use_container_width=True, key="clear")
-    st.sidebar.button("Download", use_container_width=True, key="download_btn")
     st.html(f"<style>{ARTICLES_CSS}</style>")
+    st.sidebar.button("Download", use_container_width=True, key="download_btn")
     
     top_container = st.container()
     column1, column2, column3 = top_container.columns(3)
@@ -77,14 +91,14 @@ def display_articles():
         display_article_results(main_container)
         
 def display_article_results(main_container):
-    for i, job in enumerate(jobs):
-        job_container = main_container.container(key=f'article_listing_{i}')
-        with job_container:
-            st.write(f"**{job['title']}** at {job['company']}")
-            col1, col2= job_container.columns([5,1])
-            col1.write(f'**Location:** {job['location']}')
-            col1.write(f'**Type:** {job['type']}')
-            col2.write(f'**Posted:** {job['posted']}')
+    for i, article in enumerate(articles):
+        article_container = main_container.container(key=f'article_listing_{i}')
+        with article_container:
+            st.write(f"##### {article['title']} at *{article['source']}*")
+            col1, col2= article_container.columns([5,1])
+            col1.write(f'**Category:** {article['category']}')
+            col1.write(f'**Read Time:** {article['read_time']}')
+            col2.write(f'**Published:** {article['published']}')
             col2.button('**↗ More Info Here!**',  key=f'more_info_{i}')
             
 def stats_labels(number, label):
@@ -94,8 +108,8 @@ def stats_labels(number, label):
 def display_analytics(main_container):
     col1, col2 = main_container.columns(2)
     with col1.container(key='secondary_container_type', height='stretch'):
-        # turn into articles by source
-        st.markdown('###### Jobs By Type')
+        
+        st.markdown('###### Sources')
         st.markdown('Full - Time — 85%')
         st.progress(0.25)
         st.markdown('Contract — 25%')
