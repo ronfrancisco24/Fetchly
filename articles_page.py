@@ -80,7 +80,7 @@ def display_articles():
     show_list = filter_col1.button('Listing', key='list', use_container_width=True)
     show_analytics = filter_col2.button('Articles', key='Analytics', use_container_width=True)
     
-    main_container.write('### Job Listing Results')
+    main_container.write('### Tech News Results')
 
     if show_analytics:
         display_analytics(main_container)
@@ -98,6 +98,11 @@ def display_article_results(main_container):
             col2.write(f'**Published:** {article['published']}')
             col2.button('**↗ More Info Here!**',  key=f'more_info_{i}')
             
+    
+def progress_bar_stats(label, percentage):
+    st.markdown(f'{label} — {round(percentage * 100)}%')
+    st.progress(percentage)
+    
 def stats_labels(number, label):
     st.markdown(f'<div class="stats-number">{number}</div>', unsafe_allow_html=True)
     st.markdown(f'<div class="stats-label">{label}</div>', unsafe_allow_html=True)
@@ -107,10 +112,18 @@ def display_analytics(main_container):
     with col1.container(key='secondary_container_type', height='stretch'):
         
         st.markdown('###### Sources')
-        st.markdown('Full - Time — 85%')
-        st.progress(0.25)
-        st.markdown('Contract — 25%')
-        st.progress(0.55)
+        total_articles = len(articles)
+        source_count = {}
+        for article in articles:
+            source = article['source']
+            if source in source_count:
+                source_count[source] += 1
+            else:
+                source_count[source] = 1
+                
+        for source, count in source_count.items():
+            percentage = count / total_articles
+            progress_bar_stats(source, percentage)
     
     with col2.container(key='secondary_container_stats', height='stretch'):
         st.write('###### Summary Stats')

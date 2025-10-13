@@ -1,16 +1,9 @@
 import streamlit as st
 from styles import JOBS_CSS
-
+from data_fetchers.jobs import fetch_job_listings
 # sample jobs for testing.
-jobs = [
-    {"title": "Python Developer", "company": "Tech Corp", "location": 'San Francisco, CA', "posted": '1-24-25', "type": "Full Time"},
-    {"title": "Data Scientist", "company": "AI Company", "location": 'Chicago, IL', "posted": '1-24-25', "type": "Full Time"},
-    {"title": "Web Developer", "company": "StartupXYZ", "location": 'Los Angeles, CA', "posted": '1-26-25', "type": "Contract"},
-    {"title": "Web Developer", "company": "StartupXYZ", "location": 'Los Angeles, CA', "posted": '1-26-25', "type": "Contract"},
-    {"title": "Web Developer", "company": "StartupXYZ", "location": 'Los Angeles, CA', "posted": '1-26-25', "type": "Contract"},
-    {"title": "Web Developer", "company": "StartupXYZ", "location": 'Los Angeles, CA', "posted": '1-26-25', "type": "Contract"},
-    {"title": "Web Developer", "company": "StartupXYZ", "location": 'Los Angeles, CA', "posted": '1-26-25', "type": "Contract"},
-]
+
+jobs = fetch_job_listings()
     
 def render_jobs():
     st.html(f"<style>{JOBS_CSS}</style>")
@@ -94,24 +87,25 @@ def display_article_results(main_container):
             st.write(f"**{job['title']}** at {job['company']}")
             col1, col2= job_container.columns([5,1])
             col1.write(f'**Location:** {job['location']}')
-            col1.write(f'**Type:** {job['type']}')
-            col2.write(f'**Posted:** {job['posted']}')
-            col2.button('**↗ More Info Here!**',  key=f'more_info_{i}')
+            # col1.write(f'**Type:** {job['type']}')
+            col2.write(f"**Posted:** {job['posted']}")
+            col2.markdown(f'<a href="{job['link']}" target="_blank"><button style="background-color:#4CAF50; color:white; border:none; border-radius:4px; padding:8px 16px; cursor:pointer;">**↗ More Info**</button></a>', unsafe_allow_html=True)
             
 def stats_labels(number, label):
     st.markdown(f'<div class="stats-number">{number}</div>', unsafe_allow_html=True)
     st.markdown(f'<div class="stats-label">{label}</div>', unsafe_allow_html=True)
     
+def progress_bar_stats(label, percentage):
+    st.markdown(f'{label} — {round(percentage * 100)}%')
+    st.progress(percentage)
+    
 def display_analytics(main_container):
     col1, col2 = main_container.columns(2)
     with col1.container(key='secondary_container_type', height='stretch'):
-        # turn into articles by source
         st.markdown('###### Jobs By Type')
-        st.markdown('Full - Time — 85%')
-        st.progress(0.25)
-        st.markdown('Contract — 25%')
-        st.progress(0.55)
-    
+        total_jobs = len(jobs)
+        jobs_count = {}
+        
     with col2.container(key='secondary_container_stats', height='stretch'):
         st.write('###### Summary Stats')
         stats_labels(4, 'Total Jobs')

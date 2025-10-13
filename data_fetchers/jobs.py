@@ -33,7 +33,7 @@ def fetch_job_listings():
         title = job.find(name='h3', class_='new-listing__header__title')
         company = job.find(name='p', class_='new-listing__company-name')
         location = job.find(name='p', class_='new-listing__company-headquarters')
-        date_posted = job.find(name='p', class_='new-listing__header__icons__date')
+        posted = job.find(name='p', class_='new-listing__header__icons__date')
         link = job.find_all(name='a')
         
         # If there are more than one anchor tags select the 2nd one. (This is because the main link for the application is the 2nd link.)
@@ -45,8 +45,8 @@ def fetch_job_listings():
                 'title': title.getText(),
                 'company': company.getText(),
                 'location': location.getText(),
-                'date_posted': date_posted.getText(),
-                'link': f'weworkremotely.com{web_link}'
+                'posted': posted.getText(),
+                'link': f'https://weworkremotely.com{web_link}'
             }
         )    
         

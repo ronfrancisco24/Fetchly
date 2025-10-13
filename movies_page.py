@@ -107,7 +107,6 @@ def progress_bar_stats(label, percentage):
     st.markdown(f'{label} — {round(percentage * 100)}%')
     st.progress(percentage)
     
-    
 def display_analytics(main_container):
     col1, col2 = main_container.columns(2)
     with col1.container(key='secondary_container_type', height='stretch'):
