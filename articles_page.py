@@ -21,15 +21,13 @@ def render_articles():
     # Initialize session state
     if 'articles_fetched' not in st.session_state:
         st.session_state.articles_fetched = False
-  
-    
     
     if st.session_state.articles_fetched:
+        display_articles()
         clear = st.sidebar.button('Clear Results', use_container_width=True, key="clear_btn")
         if clear:
             st.session_state.articles_fetched = False
             st.rerun() 
-        display_articles()
     else:
         initial_content()
         fetch = st.sidebar.button("Fetch Data!", use_container_width=True, key="fetch_btn")
@@ -65,7 +63,6 @@ def mark_column(column, css_key, number, description):
         st.write(description)
 
 def display_articles():
-    st.html(f"<style>{ARTICLES_CSS}</style>")
     st.sidebar.button("Download", use_container_width=True, key="download_btn")
     
     top_container = st.container()

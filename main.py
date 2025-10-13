@@ -11,7 +11,10 @@ def main():
 if __name__ == "__main__":
     main()
 
-#TODO: have a global css instead. 
+#TODO: finish jobs and movies pages.
+#TODO: implement data fetchers for each page.
+#TODO: i am filming a video right now to make it better
+
 
 
 

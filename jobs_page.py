@@ -15,14 +15,27 @@ jobs = [
 def render_jobs():
     st.html(f"<style>{JOBS_CSS}</style>")
     st.markdown("# Job Listings 💼")
-    st.sidebar.button("Fetch Data!", use_container_width=True, key="fetch_btn")
-    st.sidebar.button("Download", use_container_width=True, key="download_btn")
-    
     st.sidebar.markdown("# Job Listings 💼")
     st.sidebar.markdown('Your all-in-one hub for **Tech News, Trending Movies, and Remote Jobs** — powered by Python, Streamlit, and BeautifulSoup.')
     
-    
-    
+    if 'jobs_fetched' not in st.session_state:
+        st.session_state.jobs_fetched = False
+        
+    if st.session_state.jobs_fetched:
+        display_jobs()
+        clear = st.sidebar.button('Clear Results', use_container_width=True, key="clear_btn")
+        if clear:
+            st.session_state.jobs_fetched = False
+            st.rerun()
+    else:
+        initial_content()
+        fetch = st.sidebar.button("Fetch Data!", use_container_width=True, key="fetch_btn")
+        if fetch:
+            st.session_state.jobs_fetched = True
+            st.rerun()  
+        
+
+def initial_content():
     main_container = st.container(key='job_listing_main')
 
     with main_container:
@@ -49,10 +62,7 @@ def mark_column(column, css_key, number, description):
         st.write(description)
             
 def display_jobs():
-    st.html(f"<style>{JOBS_CSS}</style>")
-    st.sidebar.markdown("# Job Listings 💼")
-    st.sidebar.markdown('Your all-in-one hub for **Tech News, Trending Movies, and Remote Jobs** — powered by Python, Streamlit, and BeautifulSoup.')
-    st.sidebar.button("Fetch Data!", use_container_width=True, key="fetch_btn")
+    st.sidebar.button("Download", use_container_width=True, key="download_btn")
     
     top_container = st.container()
     
