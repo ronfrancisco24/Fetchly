@@ -1,6 +1,8 @@
 import streamlit as st
 from styles import ARTICLES_CSS
-    
+from data_fetchers.articles import fetch_technology_articles
+from collections import Counter
+
 # sample articles for testing.
 articles = [
     {"title": "AI Breakthrough in Machine Learning", "source": "TechCrunch", "category": "AI", "published": "1-24-25", "read_time": "5 min"},

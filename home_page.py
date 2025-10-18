@@ -13,7 +13,6 @@ def render_home():
     
     left_column, middle_column, right_column = st.columns(3)
 
-
     container_messages = ['<h5>📰 Tech Articles</h4> <br>Stay up to date with the latest developments in the tech industry. View articles in a clean format, explore raw data, or analyze overall trends such as word frequencies and sentiment.',
                         '<h5>🎬 Trending Movies</h4> <br>See what’s popular in film today using external APIs. Explore movie posters, ratings, and analytics like genre breakdowns and average ratings.',
                         '<h5>💼 Job Listings</h4> <br>Browse jobs scraped from reputable job boards (like WeWorkRemotely). Filter by contract type (Full-Time/Contract), analyze job type distribution, and view salary insights where available.']

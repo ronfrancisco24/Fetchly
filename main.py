@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
 #TODO: finish jobs and movies pages.
 #TODO: implement data fetchers for each page.
-#TODO: i am filming a video right now to make it better
+#TODO: check how you can use main. 
 
 
 

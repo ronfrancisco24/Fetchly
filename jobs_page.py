@@ -1,10 +1,23 @@
 import streamlit as st
 from styles import JOBS_CSS
 from data_fetchers.jobs import fetch_job_listings
-# sample jobs for testing.
+from collections import Counter
 
 jobs = fetch_job_listings()
     
+total_jobs = len(jobs)
+unique_companies = set()
+
+locations = [job['location'] for job in jobs]
+companies = [company['company'] for company in jobs]
+location_counter = Counter(locations)
+company_counter = Counter(companies)
+top_locations = location_counter.most_common(3)
+top_location, location_count = location_counter.most_common(1)[0]
+top_company, company_count = company_counter.most_common(1)[0]
+new_today = len([job for job in jobs if job['posted'] == 'New'])
+
+# Modularize and declutter code.
 def render_jobs():
     st.html(f"<style>{JOBS_CSS}</style>")
     st.markdown("# Job Listings 💼")
@@ -51,7 +64,7 @@ def initial_content():
             
 def mark_column(column, css_key, number, description):
     with column.container(key=css_key):
-        st.write(f'**{number}**')
+        st.markdown(f'<strong>{number}</strong>', unsafe_allow_html=True)
         st.write(description)
             
 def display_jobs():
@@ -61,9 +74,9 @@ def display_jobs():
     
     column1, column2, column3 = top_container.columns(3)
    
-    mark_column(column=column1, css_key='stats_container_1', number='4', description='Jobs Found')
-    mark_column(column=column2, css_key='stats_container_2', number='4', description='Jobs Found')
-    mark_column(column=column3, css_key='stats_container_3', number='4', description='Jobs Found')
+    mark_column(column=column1, css_key='stats_container_1', number=f'{new_today}', description='New Today')
+    mark_column(column=column2, css_key='stats_container_2', number=f'{top_company}', description='Most Active Recruiter')
+    mark_column(column=column3, css_key='stats_container_3', number=f'{top_location}', description='Top Location')
     
     main_container = st.container(key='main_container')
     filter_container = main_container.container(key='filter_container')
@@ -84,10 +97,10 @@ def display_article_results(main_container):
     for i, job in enumerate(jobs):
         job_container = main_container.container(key=f'job_listing_{i}')
         with job_container:
-            st.write(f"**{job['title']}** at {job['company']}")
+            st.markdown(f"<strong>{job['title']}</strong>", unsafe_allow_html=True)
             col1, col2= job_container.columns([5,1])
+            col1.markdown(f'**Company**: {job['company']}')
             col1.write(f'**Location:** {job['location']}')
-            # col1.write(f'**Type:** {job['type']}')
             col2.write(f"**Posted:** {job['posted']}")
             col2.markdown(f'<a href="{job['link']}" target="_blank"><button style="background-color:#4CAF50; color:white; border:none; border-radius:4px; padding:8px 16px; cursor:pointer;">**↗ More Info**</button></a>', unsafe_allow_html=True)
             
@@ -101,14 +114,22 @@ def progress_bar_stats(label, percentage):
     
 def display_analytics(main_container):
     col1, col2 = main_container.columns(2)
+    
+    for job in jobs:
+        unique_companies.add(job['company'])
+        
+    company_count = len(unique_companies)
+    
     with col1.container(key='secondary_container_type', height='stretch'):
-        st.markdown('###### Jobs By Type')
-        total_jobs = len(jobs)
-        jobs_count = {}
+        st.markdown('###### Jobs By Location')
+        for location, count in top_locations:
+            percentage = count / total_jobs
+            progress_bar_stats(location, percentage)
+        
         
     with col2.container(key='secondary_container_stats', height='stretch'):
         st.write('###### Summary Stats')
-        stats_labels(4, 'Total Jobs')
-        stats_labels(5, 'Total Unique Companies')
+        stats_labels(str(total_jobs), 'Total Jobs')
+        stats_labels(str(company_count), 'Total Unique Companies')
     
     
